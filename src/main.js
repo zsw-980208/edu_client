@@ -9,8 +9,10 @@ Vue.prototype.$axios = axios;
 
 import Element from "element-ui"
 import 'element-ui/lib/theme-chalk/index.css'
-
+import "../static/js/gt"
 Vue.use(Element);
+
+
 import "../static/css/global.css"
 Vue.config.productionTip = false
 

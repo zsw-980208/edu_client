@@ -8,19 +8,33 @@
                 <ul class="nav full-left" v-for="(nav, key) in nav_list" :key="key">
                     <li><span>{{nav.title}}</span></li>
                 </ul>
-                <div class="login-bar full-right">
+
+<!--                    用户存在-->
+                   <div class="login-bar full-right" v-if="token">
                     <div class="shop-cart full-left">
                         <img src="/static/image/" alt="">
                         <span><router-link to="/cart">购物车</router-link></span>
                     </div>
                     <div class="login-box full-left">
-                        <span>登录</span>
+                        <router-link to="/home/login/">个人中心</router-link>
+                        &nbsp;|&nbsp;
+                        <span @click="logout">退出登录</span>
+                    </div>
+                </div>
+                    <!--          用户不存在      -->
+                <div class="login-bar full-right" v-else>
+                    <div class="shop-cart full-left">
+                        <img src="/static/image/" alt="">
+                        <span><router-link to="/cart">购物车</router-link></span>
+                    </div>
+                    <div class="login-box full-left">
+                        <router-link to="/home/login/">登录</router-link>
                         &nbsp;|&nbsp;
                         <span>注册</span>
                     </div>
                 </div>
+                </div>
             </div>
-        </div>
     </div>
 </template>
 
@@ -30,9 +44,15 @@
         data(){
             return{
                 nav_list:[], // 轮播图的数据
+                token: "",
             }
         },
         methods:{
+             // 获取token  确定用户登录状态
+            get_token() {
+                this.token = localStorage.user_token || sessionStorage.user_token;
+                // return this.token;
+            },
             get_nav_header(){
                 this.$axios({
                     url: "http://127.0.0.1:8000/home/nav/1",
@@ -45,11 +65,17 @@
                     console.log(error);
                 })
             },
+            logout(){
+                localStorage.clear();
+                sessionStorage.clear();
+                location.reload();
+            }
         },
         // 在当前页面渲染之前将数据获取并赋值给 data
         created() {
             // 获取轮播图数据
             this.get_nav_header();
+            this.get_token();
         }
 
     }
