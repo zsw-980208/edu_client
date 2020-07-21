@@ -6,14 +6,14 @@
                     <router-link to="/"><img src="/static/image/logo.png" alt=""></router-link>
                 </div>
                 <ul class="nav full-left" v-for="(nav, key) in nav_list" :key="key">
-                    <li><span>{{nav.title}}</span></li>
+                    <li><span><router-link to="/course">{{nav.title}}</router-link></span></li>
                 </ul>
 
 <!--                    用户存在-->
                    <div class="login-bar full-right" v-if="token">
                     <div class="shop-cart full-left">
                         <img src="/static/image/" alt="">
-                        <span><router-link to="/cart">购物车</router-link></span>
+                        <span><router-link to="/cart">{{this.$store.state.course_len}}购物车</router-link></span>
                     </div>
                     <div class="login-box full-left">
                         <router-link to="/home/login/">个人中心</router-link>
